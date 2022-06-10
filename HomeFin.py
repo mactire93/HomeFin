@@ -64,7 +64,7 @@ def add_many():
     i = int(input("Ile wydatków chcesz wprowadzić: "))
     for count in range(1, i+1):
         exp_name = input("Nazwa: ")
-        exp_value = int(input("Kwota: "))
+        exp_value = input("Kwota: ")
         line = date,sel_cat,exp_name,exp_value
         list_of_expensive.append(tuple(line))
 
