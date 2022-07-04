@@ -18,45 +18,13 @@ def create_new_table():
     # Commit out command
     conn.commit()
     # Close our connection
-    conn.close()    
-
-def add_one():
-    """
-    Wybiera miesiąc i dodaje do niego jeden produkt oraz cenę
-    """
-    conn = sqlite3.connect('homefin.db')
-    month = input("Miesiąc: ")
-    name = input("Nazwa: ")
-    price = input("Cena :")
-    date = datetime.date.today()
-
-    add = "INSERT INTO " + month +" VALUES (?,?,?)"
-    c = conn.cursor()
-    
-    c.execute(add, (date, name, price))
-
-    conn.commit()
     conn.close()
-
-def delete_one():
-    conn = sqlite3.connect('homefin.db')
-    month = input("Wybierz miesiąc: ")
-    id_number = input("Wprowadź nr pozycji: ")
-
-    delete_position = "DELETE from "+month+" WHERE rowid = (?)"
-    c = conn.cursor()
-    c.execute(delete_position, id_number)
-    
-    # Commit out command
-    conn.commit()
-    # Close our connection
-    conn.close()
-
 
 def add_many():
     conn = sqlite3.connect('homefin.db')
     c = conn.cursor()
-    month = input("Miesiąc: ")
+    global month
+    month = month
     global category
     sel_cat = category()
     list_of_expensive = []
@@ -65,7 +33,7 @@ def add_many():
     for count in range(1, i+1):
         exp_name = input("Nazwa: ")
         exp_value = input("Kwota: ")
-        line = date,sel_cat,exp_name,exp_value
+        line = date,sel_cat,exp_name,exp_value.replace(",",".")
         list_of_expensive.append(tuple(line))
 
     add_many_position = "INSERT INTO "+month+" VALUES (?,?,?,?)"
@@ -83,7 +51,8 @@ def show_all():
     conn = sqlite3.connect('homefin.db')
     #Create a cursor
     c = conn.cursor()
-    month = input("\nMiesiąc: ")
+    global month
+    month = month
     show = "SELECT rowid, * FROM "+month
     #Query The Database
     c.execute(show)
@@ -127,7 +96,8 @@ def category():
 def category_lookup():
     conn = sqlite3.connect('homefin.db')
     c = conn.cursor()
-    month = input("\nMiesiąc: ")
+    global month
+    month = month
     category = """\nWybierz kategorię:
     1. Jedzenie
     2. Czynsz i opłaty
@@ -193,90 +163,46 @@ def category_lookup():
             # Close our connection
             conn.close()
 
-def id_lookup():
-    conn = sqlite3.connect('homefin.db')
-    c = conn.cursor()
-    month = input("\nMiesiąc: ")
-    id_number = input("Wprowadź numer ID: ")
-    lookup = "SELECT * from "+month+" WHERE rowid = (?)"
-    c.execute(lookup,(id_number,))
+def load_sheet():
+    global month
+    month = input("Wprowadź nazwę okresu rozliczeniowego: ")
+    menu = """
 
-    items = c.fetchall()
+1.Wprowadź wydatki
+2.Wyświetl listę wydatków
+3.Wyświetl kategoriami
+4.Wróć do poprzedniego menu
 
-    if len(items)==0:
-        print("Brak produktu")
-    else:
-        for item in items:
-            print(item)
+Wprowadź polecene: """
 
-    # Commit out command
-    conn.commit()
-    # Close our connection
-    conn.close()
-
-def name_lookup():
-    conn = sqlite3.connect('homefin.db')
-    c = conn.cursor()
-    month = input("\nMiesiąc: ")
-    name = input("Wprowadź nazwę: ")
-    lookup = "SELECT * from "+month+" WHERE nazwa = (?)"
-    c.execute(lookup,(name,))
-    items = c.fetchall()
-
-    if len(items)==0:
-        print("Brak produktu")
-    else:
-        for item in items:
-            print(item)
-
-    # Commit out command
-    conn.commit()
-    # Close our connection
-    conn.close()
-
-def date_lookup():
-    conn = sqlite3.connect('homefin.db')
-    c = conn.cursor()
-    month = input("\nMiesiąc: ")
-    date = input("Wprowadź datę (rrrr-mm-dd) : ")
-    lookup = "SELECT * from "+month+" WHERE data = (?)"
-    c.execute(lookup,(date,))
-    items = c.fetchall()
-
-    if len(items)==0:
-        print("Nieporawny format daty")
-    else:
-        for item in items:
-            print(item)
-
-    # Commit out command
-    conn.commit()
-    # Close our connection
-    conn.close()
+    while(True):
+        command = read_int_ranged(menu, 1, 4)
+        if command == 1:
+            add_many()
+        elif command == 2:
+            show_all()
+        elif command == 3:
+            category_lookup()
+        elif command == 4:
+            break
 
 
 def main_menu():
     menu = """ ---------Aplikacja Homefin---------
 
 1. Stwórz nowy okres rozliczeniowy
-2. Wprowadź wydatki
-3. Wyświetl listę wydatków
-4. Wyświetl kategoriami
-5. Zamknij program
+2. Wczytaj okres rozliczeniowy
+3. Zamknij program
 
 Wprowadź polecenie: """
 
     while(True):
-        command = read_int_ranged(menu, 1, 5)
+        command = read_int_ranged(menu, 1, 3)
         if command == 1:
             create_new_table()
         elif command == 2:
-            add_many()
+            load_sheet()
         elif command == 3:
-            show_all()
-        elif command == 4:
-            category_lookup()
-        elif command == 5:
             break
             
 
@@ -284,14 +210,7 @@ Wprowadź polecenie: """
 
 
 main_menu()
-#month = input("Miesiąc: ")
-#create_new_table(month)
-#add_one()
-#delete_one()
-#add_many()
-#show_all()
-#name_lookup()
-#date_lookup()
+
 
 
 

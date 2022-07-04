@@ -6,12 +6,11 @@ Aplikacja zliczająca wydatki z wykorzystaniem SQLite.
 
 Aby stworzyć nowy okres rozliczeniowy, wybierz 1 a następnie wprowadź nazwę miesiąca. Dla porządku zalecam wpisać nazwę i rok.
 
-Następnie wybierz opcję "Wprowadź wydatki" aby wprowadzić wydatki. Wpisz nazwę miesiąca (miesiąca z rokiem jeśli tak nazwałeś okres rozliczeniowy).
+Aby wczytać okres rozliczeniowy wybierz 2, aplikacja zapyta o nazwę arkusza i otworzy dodatkowe menu.
 
-Następnie wybierz kategorię wydatku, ilość pozycji i wprowadź nazwę i wartość.
+W menu konkretnego arkusza możesz wprowadzić wydatki(1), wyświetlić ich listę(2) oraz wyświetlić je kategoriami(3).
 
-Wybierz 3 aby wyświetlić listę wszystkich wydatków.
-Wybierz 4 aby wyświetlić wydatki kategoriami.
+Aby wrócić do poprzedniego menu wciśnij komendę zgodnie z poleceniem.
 
 Za każdym razem program liczy sumę wydanych pieniędzy.
 
@@ -21,16 +20,16 @@ HomeFin application
 
 An application that counts expenses using SQLite.
 
-To create a new accounting period, select 1 and then enter a month name. For neatness, I recommend entering the name and year.
+To create a new accounting period, select 1 and then enter the name of the month. For the sake of order, I recommend entering the name and the year.
 
-Then select "Enter Expenses" to enter the expenses. Enter the name of the month (month with year if you named the accounting period that way).
+To load an accounting period select 2, the application will ask for the name of the sheet and open an additional menu.
 
-Then select the expense category, number of items, and enter the name and value.
+In the menu for a specific sheet, you can enter expenses(1), view a list of them(2) and view them by category(3).
 
-Select 3 to view a list of all expenses.
-Select 4 to view the expenses by category.
+To return to the previous menu press the command as prompted.
 
-Each time, the program counts the total amount of money spent.
+Each time, the program counts the sum of money spent.
+
 
 
 
